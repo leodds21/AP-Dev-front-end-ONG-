@@ -1,0 +1,20 @@
+node_modules/
+dist/
+.env
+.env.*
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+.vscode/
+.idea/
+.vercel/
+test-results/
+playwright-report/
+# Entregas acadêmicas e exportações anteriores, preservadas apenas localmente.
+entrega-experiencia-II/
+entrega-experiencia-III/
+ONG_Transformando_Vidas/
+ONG_Transformando_Vidas.zip
+codigo-fonte-completo.txt

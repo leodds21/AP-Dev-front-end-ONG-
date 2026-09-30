@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONG Transformando Vidas - Cadastro</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="cabecalho">
+        <div class="container header-inner">
+            <p class="nome-ong">ONG Transformando Vidas</p>
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav-list" aria-label="Abrir menu">☰</button>
+            <nav class="main-nav" aria-label="Navegação principal">
+                <ul class="nav-list" id="main-nav-list">
+                    <li><a href="#inicio">Início</a></li>
+                    <li class="dropdown">
+                        <div class="dropdown-heading">
+                            <a href="#projetos">Projetos</a>
+                            <button class="submenu-toggle" type="button" aria-label="Abrir projetos" aria-expanded="false" aria-controls="submenu-projetos">▾</button>
+                        </div>
+                        <ul class="submenu" id="submenu-projetos">
+                            <li><a href="#projetos" data-project-target="educacao">Educação</a></li>
+                            <li><a href="#projetos" data-project-target="voluntariado">Voluntariado</a></li>
+                            <li><a href="#projetos" data-project-target="doacoes">Doações</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#cadastro" aria-current="page">Cadastro</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="app" class="container page-grid">
+        <h1>Cadastro</h1>
+        <p class="form-intro">Preencha seus dados para demonstrar interesse em participar da ONG Transformando Vidas.</p>
+        <p class="form-intro" id="storage-summary" role="status"></p>
+        <div class="alerts">
+            <div class="alert" id="form-info" hidden><strong class="feedback-title"></strong> <span class="feedback-message"></span></div>
+            <div class="alert" id="form-warning" hidden><strong class="feedback-title"></strong> <span class="feedback-message"></span></div>
+            <div class="alert" id="form-error" role="alert" hidden><strong class="feedback-title"></strong> <span class="feedback-message"></span></div>
+            <div class="alert" id="form-success" role="status" hidden><strong class="feedback-title"></strong> <span class="feedback-message"></span></div>
+        </div>
+
+        <!-- Formulário de cadastro -->
+        <form id="cadastro-form" action="#" method="post">
+            <fieldset class="form-group">
+                <legend>Dados pessoais</legend>
+                <div class="fields-row">
+                <div class="campo">
+                    <label for="nome">Nome completo</label>
+                    <input type="text" id="nome" name="nome" required autocomplete="name" aria-describedby="nome-error">
+                    <span class="field-error" id="nome-error">Informe seu nome completo.</span>
+                </div>
+                <div class="campo">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" required autocomplete="email" aria-describedby="email-error">
+                    <span class="field-error" id="email-error">Informe um e-mail válido.</span>
+                </div>
+                <div class="campo">
+                    <label for="cpf">CPF</label>
+                    <input type="text" id="cpf" name="cpf" required inputmode="numeric" placeholder="000.000.000-00" pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}" title="Use o formato 000.000.000-00" aria-describedby="cpf-error">
+                    <span class="field-error" id="cpf-error">Use o formato 000.000.000-00.</span>
+                </div>
+                <div class="campo">
+                    <label for="nascimento">Data de nascimento</label>
+                    <input type="date" id="nascimento" name="nascimento" required autocomplete="bday" aria-describedby="nascimento-error">
+                    <span class="field-error" id="nascimento-error">Informe uma data de nascimento.</span>
+                </div>
+                <div class="campo">
+                    <label for="telefone">Telefone</label>
+                    <input type="tel" id="telefone" name="telefone" required inputmode="tel" placeholder="(00) 00000-0000" pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}" title="Use o formato (00) 00000-0000" autocomplete="tel" aria-describedby="telefone-error">
+                    <span class="field-error" id="telefone-error">Use o formato (00) 00000-0000.</span>
+                </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>Endereço</legend>
+                <div class="fields-row">
+                <div class="campo">
+                    <label for="cep">CEP</label>
+                    <input type="text" id="cep" name="cep" required inputmode="numeric" placeholder="00000-000" pattern="[0-9]{5}-[0-9]{3}" title="Use o formato 00000-000" autocomplete="postal-code" aria-describedby="cep-error">
+                    <span class="field-error" id="cep-error">Use o formato 00000-000.</span>
+                </div>
+                <div class="campo">
+                    <label for="endereco">Endereço</label>
+                    <input type="text" id="endereco" name="endereco" required autocomplete="street-address" aria-describedby="endereco-error">
+                    <span class="field-error" id="endereco-error">Informe o endereço.</span>
+                </div>
+                <div class="campo">
+                    <label for="cidade">Cidade</label>
+                    <input type="text" id="cidade" name="cidade" required autocomplete="address-level2" aria-describedby="cidade-error">
+                    <span class="field-error" id="cidade-error">Informe a cidade.</span>
+                </div>
+                <div class="campo">
+                    <label for="estado">Estado</label>
+                    <select id="estado" name="estado" required autocomplete="address-level1" aria-describedby="estado-error">
+                        <option value="" selected>Selecione</option>
+                        <option value="AC">Acre</option><option value="AL">Alagoas</option><option value="AP">Amapá</option><option value="AM">Amazonas</option><option value="BA">Bahia</option><option value="CE">Ceará</option><option value="DF">Distrito Federal</option><option value="ES">Espírito Santo</option><option value="GO">Goiás</option><option value="MA">Maranhão</option><option value="MT">Mato Grosso</option><option value="MS">Mato Grosso do Sul</option><option value="MG">Minas Gerais</option><option value="PA">Pará</option><option value="PB">Paraíba</option><option value="PR">Paraná</option><option value="PE">Pernambuco</option><option value="PI">Piauí</option><option value="RJ">Rio de Janeiro</option><option value="RN">Rio Grande do Norte</option><option value="RS">Rio Grande do Sul</option><option value="RO">Rondônia</option><option value="RR">Roraima</option><option value="SC">Santa Catarina</option><option value="SP">São Paulo</option><option value="SE">Sergipe</option><option value="TO">Tocantins</option>
+                    </select>
+                    <span class="field-error" id="estado-error">Selecione um estado.</span>
+                </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>Forma de participação</legend>
+                <div class="opcoes">
+                    <input type="radio" id="voluntariado" name="participacao" value="voluntariado" required aria-describedby="participacao-error">
+                    <label for="voluntariado">Voluntariado</label>
+                    <input type="radio" id="doacao" name="participacao" value="doacao" aria-describedby="participacao-error">
+                    <label for="doacao">Doação</label>
+                </div>
+                <span class="field-error" id="participacao-error">Escolha uma forma de participação.</span>
+            </fieldset>
+
+            <div class="form-actions">
+                <button type="submit">Salvar cadastro</button>
+            </div>
+        </form>
+    </main>
+    <footer>
+        <div class="container">© 2026 ONG Transformando Vidas</div>
+    </footer>
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

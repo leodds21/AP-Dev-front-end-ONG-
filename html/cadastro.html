@@ -25,7 +25,7 @@
                 </div>
                 <div class="campo">
                     <label for="cpf">CPF</label>
-                    <input type="text" id="cpf" name="cpf" required inputmode="numeric" placeholder="000.000.000-00" pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}" title="Use o formato 000.000.000-00" aria-describedby="cpf-error">
+                    <input type="text" id="cpf" name="cpf" required maxlength="14" inputmode="numeric" placeholder="000.000.000-00" pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}" title="Use o formato 000.000.000-00" aria-describedby="cpf-error">
                     <span class="field-error" id="cpf-error">Use o formato 000.000.000-00.</span>
                 </div>
                 <div class="campo">
@@ -35,7 +35,7 @@
                 </div>
                 <div class="campo">
                     <label for="telefone">Telefone</label>
-                    <input type="tel" id="telefone" name="telefone" required inputmode="tel" placeholder="(00) 00000-0000" pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}" title="Use o formato (00) 00000-0000" autocomplete="tel" aria-describedby="telefone-error">
+                    <input type="tel" id="telefone" name="telefone" required maxlength="15" inputmode="tel" placeholder="(00) 00000-0000" pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}" title="Use o formato (00) 00000-0000" autocomplete="tel" aria-describedby="telefone-error">
                     <span class="field-error" id="telefone-error">Use o formato (00) 00000-0000.</span>
                 </div>
                 </div>
@@ -46,7 +46,7 @@
                 <div class="fields-row">
                 <div class="campo">
                     <label for="cep">CEP</label>
-                    <input type="text" id="cep" name="cep" required inputmode="numeric" placeholder="00000-000" pattern="[0-9]{5}-[0-9]{3}" title="Use o formato 00000-000" autocomplete="postal-code" aria-describedby="cep-error">
+                    <input type="text" id="cep" name="cep" required maxlength="9" inputmode="numeric" placeholder="00000-000" pattern="[0-9]{5}-[0-9]{3}" title="Use o formato 00000-000" autocomplete="postal-code" aria-describedby="cep-error">
                     <span class="field-error" id="cep-error">Use o formato 00000-000.</span>
                 </div>
                 <div class="campo">

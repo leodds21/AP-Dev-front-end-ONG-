@@ -72,7 +72,6 @@ const templates = {
     inicio: inicioHtml
         .replaceAll("imagens/projeto-educacao.webp", imagens["projeto-educacao"].webp)
         .replaceAll("imagens/projeto-educacao.jpg", imagens["projeto-educacao"].jpg),
-    projetos: projetosHtml,
     cadastro: cadastroHtml
 };
 

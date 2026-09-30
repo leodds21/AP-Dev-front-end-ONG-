@@ -1,7 +1,7 @@
 import { projetos } from "./templates.js";
 import { aplicarMascara, prepararFormulario, validarCampo,
     validarFormulario, formularioValido } from "./validation.js";
-import { lerCadastros, salvarCadastro } from "./storage.js";
+import { lerCadastros, salvarCadastro, lerAltoContraste, salvarAltoContraste } from "./storage.js";
 
 const mensagens = {
     info: {
@@ -43,10 +43,23 @@ export function atualizarBadge(elemento, dados) {
 }
 
 function fecharSubmenu() {
-    document.querySelector(".dropdown").classList.remove("is-open");
+    const dropdown = document.querySelector(".dropdown");
+    dropdown.classList.remove("is-open");
+    if (window.innerWidth >= 1024) dropdown.classList.add("is-dismissed");
     const botao = document.querySelector(".submenu-toggle");
     botao.setAttribute("aria-expanded", "false");
     botao.setAttribute("aria-label", "Abrir projetos");
+}
+
+function sincronizarSubmenu() {
+    const dropdown = document.querySelector(".dropdown");
+    const aberto = window.innerWidth >= 1024
+        ? !dropdown.classList.contains("is-dismissed") &&
+            (dropdown.matches(":hover, :focus-within") || dropdown.classList.contains("is-open"))
+        : dropdown.classList.contains("is-open");
+    const botao = dropdown.querySelector(".submenu-toggle");
+    botao.setAttribute("aria-expanded", String(aberto));
+    botao.setAttribute("aria-label", aberto ? "Fechar projetos" : "Abrir projetos");
 }
 
 function fecharMenu() {
@@ -95,6 +108,27 @@ export function iniciarEventos(app) {
     const modal = document.getElementById("project-modal");
     const toast = document.getElementById("validation-toast");
 
+    const contraste = document.querySelector(".contrast-toggle");
+    function aplicarContraste(ativo) {
+        document.body.classList.toggle("alto-contraste", ativo);
+        contraste.setAttribute("aria-pressed", String(ativo));
+    }
+    aplicarContraste(lerAltoContraste());
+    contraste.addEventListener("click", () => {
+        const ativo = !document.body.classList.contains("alto-contraste");
+        aplicarContraste(ativo);
+        try {
+            salvarAltoContraste(ativo);
+        } catch {
+            mostrarFeedback(toast, {
+                estado: "warning",
+                mensagem: "Contraste alterado. Não foi possível salvar a preferência neste navegador."
+            });
+            clearTimeout(temporizadorToast);
+            temporizadorToast = setTimeout(fecharToast, 10000);
+        }
+    });
+
     menuButton.addEventListener("click", () => {
         const aberto = mainNav.classList.toggle("is-open");
         menuButton.setAttribute("aria-expanded", String(aberto));
@@ -102,15 +136,29 @@ export function iniciarEventos(app) {
         if (!aberto) fecharSubmenu();
     });
     submenuButton.addEventListener("click", () => {
-        dropdown.classList.remove("is-dismissed");
-        const aberto = dropdown.classList.toggle("is-open");
-        submenuButton.setAttribute("aria-expanded", String(aberto));
-        submenuButton.setAttribute("aria-label", aberto ? "Fechar projetos" : "Abrir projetos");
-        if (!aberto && window.innerWidth >= 1024) dropdown.classList.add("is-dismissed");
+        if (submenuButton.getAttribute("aria-expanded") === "true") fecharSubmenu();
+        else {
+            dropdown.classList.remove("is-dismissed");
+            dropdown.classList.add("is-open");
+            sincronizarSubmenu();
+        }
     });
-    dropdown.addEventListener("mouseleave", () => dropdown.classList.remove("is-dismissed"));
+    dropdown.addEventListener("mouseenter", () => {
+        dropdown.classList.remove("is-dismissed");
+        sincronizarSubmenu();
+    });
+    dropdown.addEventListener("mouseleave", () => {
+        dropdown.classList.remove("is-dismissed");
+        sincronizarSubmenu();
+    });
     dropdown.addEventListener("focusin", evento => {
         if (!dropdown.contains(evento.relatedTarget)) dropdown.classList.remove("is-dismissed");
+        sincronizarSubmenu();
+    });
+    dropdown.addEventListener("focusout", () => queueMicrotask(sincronizarSubmenu));
+    window.matchMedia("(min-width: 1024px)").addEventListener("change", evento => {
+        if (!evento.matches && mainNav.contains(document.activeElement)) menuButton.focus();
+        fecharMenu();
     });
     document.addEventListener("click", evento => {
         if (!dropdown.contains(evento.target)) fecharSubmenu();
@@ -120,7 +168,7 @@ export function iniciarEventos(app) {
     });
     document.addEventListener("keydown", evento => {
         if (evento.key !== "Escape" || modal.open) return;
-        if (dropdown.matches(":hover") || dropdown.classList.contains("is-open") ||
+        if ((window.innerWidth >= 1024 && dropdown.matches(":hover")) || dropdown.classList.contains("is-open") ||
             dropdown.contains(document.activeElement)) {
             fecharSubmenu();
             dropdown.classList.add("is-dismissed");

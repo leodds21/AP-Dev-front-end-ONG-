@@ -1,15 +1,14 @@
-import { carregarTemplates, prepararFeedback } from "./templates.js";
+import { prepararFeedback } from "./templates.js";
 import { iniciarRouter } from "./router.js";
 import { iniciarEventos, prepararPagina } from "./events.js";
 
-async function iniciar() {
+function iniciar() {
     const app = document.querySelector("#app");
     if (!app) {
         console.error("Contêiner principal não encontrado.");
         return;
     }
     try {
-        await carregarTemplates();
         prepararFeedback();
         iniciarEventos(app);
         iniciarRouter(app, prepararPagina);

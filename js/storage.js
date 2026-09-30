@@ -29,3 +29,15 @@ export function salvarCadastro(participacao) {
     localStorage.setItem("cadastros", JSON.stringify(dados));
     return dados.length;
 }
+
+export function lerAltoContraste() {
+    try {
+        return localStorage.getItem("alto-contraste") === "true";
+    } catch {
+        return false;
+    }
+}
+
+export function salvarAltoContraste(ativo) {
+    localStorage.setItem("alto-contraste", String(ativo));
+}

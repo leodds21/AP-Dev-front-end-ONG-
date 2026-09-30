@@ -8,10 +8,12 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <a class="skip-link" href="#app">Pular para o conteúdo</a>
     <!-- Cabeçalho -->
     <header class="cabecalho">
         <div class="container header-inner">
             <p class="nome-ong">ONG Transformando Vidas</p>
+            <button class="contrast-toggle" type="button" aria-pressed="false">Alto contraste</button>
             <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav-list" aria-label="Abrir menu">☰</button>
             <nav class="main-nav" aria-label="Navegação principal">
                 <ul class="nav-list" id="main-nav-list">
@@ -33,36 +35,9 @@
         </div>
     </header>
 
-    <main id="app" class="container page-grid">
-        <section class="apresentacao">
-            <div class="apresentacao-texto">
-                <h1>ONG Transformando Vidas</h1>
-                <p>Somos uma organização fictícia que aproxima pessoas, ideias e ações para melhorar a vida em nossa comunidade.</p>
-            </div>
-            <picture class="apresentacao-imagem">
-                <source srcset="images/projeto-educacao.webp" type="image/webp">
-                <img src="images/projeto-educacao.jpg" alt="Crianças participando de uma atividade educativa" width="800" height="533">
-            </picture>
-        </section>
-
-        <section class="secao-inicio">
-            <h2>Sobre nós</h2>
-            <p>A ONG Transformando Vidas realiza ações de educação, cuidado com o meio ambiente e apoio a famílias em situação de necessidade.</p>
-        </section>
-
-        <section class="secao-inicio">
-            <h2>Como ajudar</h2>
-            <p>Conheça nossos <a href="#projetos">projetos</a> e faça seu <a href="#cadastro">cadastro</a> para participar como voluntário ou doador.</p>
-        </section>
-
-        <section class="secao-inicio">
-            <h2>Contato</h2>
-            <address>
-                E-mail: <a href="mailto:contato@ongtransformandovidas.org.br">contato@ongtransformandovidas.org.br</a><br>
-                Telefone: <a href="tel:+5521999999999">(21) 99999-9999</a><br>
-                Rio de Janeiro - RJ
-            </address>
-        </section>
+    <main id="app" class="container page-grid" tabindex="-1">
+        <p>Carregando conteúdo…</p>
+        <noscript>Ative o JavaScript para navegar neste projeto acadêmico.</noscript>
     </main>
 
     <footer>

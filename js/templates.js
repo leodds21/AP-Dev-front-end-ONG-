@@ -1,3 +1,22 @@
+import inicioHtml from "../html/inicio.html?raw";
+import projetosHtml from "../html/projetos.html?raw";
+import cadastroHtml from "../html/cadastro.html?raw";
+
+const imagens = {
+    "projeto-educacao": {
+        webp: new URL("../imagens/projeto-educacao.webp", import.meta.url).href,
+        jpg: new URL("../imagens/projeto-educacao.jpg", import.meta.url).href
+    },
+    "voluntariado-arvore": {
+        webp: new URL("../imagens/voluntariado-arvore.webp", import.meta.url).href,
+        jpg: new URL("../imagens/voluntariado-arvore.jpg", import.meta.url).href
+    },
+    "doacoes-alimentos": {
+        webp: new URL("../imagens/doacoes-alimentos.webp", import.meta.url).href,
+        jpg: new URL("../imagens/doacoes-alimentos.jpg", import.meta.url).href
+    }
+};
+
 export const projetos = [
     {
         id: "educacao",
@@ -37,8 +56,8 @@ export function projetoCardTemplate(projeto) {
             <span class="badge" data-state="${projeto.badge.estado}">${projeto.badge.texto}</span>
             <h2>${projeto.titulo}</h2>
             <picture>
-                <source srcset="images/${projeto.imagem}.webp" type="image/webp">
-                <img src="images/${projeto.imagem}.jpg" alt="${projeto.alt}" width="800" height="533">
+                <source srcset="${imagens[projeto.imagem].webp}" type="image/webp">
+                <img src="${imagens[projeto.imagem].jpg}" alt="${projeto.alt}" width="800" height="533" loading="lazy">
             </picture>
             <p>${projeto.descricao}</p>
             <div class="card-actions">
@@ -48,27 +67,19 @@ export function projetoCardTemplate(projeto) {
         </article>`;
 }
 
-const paginas = { inicio: "index.html", projetos: "projetos.html", cadastro: "cadastro.html" };
-const templates = {};
-
-export async function carregarTemplates() {
-    // Os HTMLs existentes continuam sendo a fonte dos conteúdos e do formulário.
-    await Promise.all(Object.entries(paginas).map(async ([rota, arquivo]) => {
-        const resposta = await fetch(new URL("../" + arquivo, import.meta.url));
-        if (!resposta.ok) throw new Error("Não foi possível carregar " + arquivo);
-        const documento = new DOMParser().parseFromString(await resposta.text(), "text/html");
-        const principal = documento.querySelector("main");
-        if (!principal) throw new Error("Conteúdo principal ausente em " + arquivo);
-        if (rota === "projetos") {
-            principal.querySelector(".projects-grid").innerHTML =
-                projetos.map(projetoCardTemplate).join("");
-        }
-        templates[rota] = principal.innerHTML;
-    }));
-}
+// Fragmentos locais são incluídos na build, sem requisições adicionais de HTML.
+const templates = {
+    inicio: inicioHtml
+        .replaceAll("imagens/projeto-educacao.webp", imagens["projeto-educacao"].webp)
+        .replaceAll("imagens/projeto-educacao.jpg", imagens["projeto-educacao"].jpg),
+    cadastro: cadastroHtml
+};
 
 export function obterTemplate(rota) {
-    return templates[rota];
+    if (rota !== "projetos") return templates[rota];
+    const documento = new DOMParser().parseFromString(projetosHtml, "text/html");
+    documento.querySelector(".projects-grid").innerHTML = projetos.map(projetoCardTemplate).join("");
+    return documento.body.innerHTML;
 }
 
 export function prepararFeedback() {

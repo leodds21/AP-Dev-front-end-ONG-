@@ -2,14 +2,11 @@ import { obterTemplate } from "./templates.js";
 
 export function iniciarRouter(app, aoRenderizar) {
     const titulos = { inicio: "Início", projetos: "Projetos", cadastro: "Cadastro" };
-    const arquivo = location.pathname.split("/").pop();
-    const inicial = arquivo === "projetos.html" ? "projetos" :
-        arquivo === "cadastro.html" ? "cadastro" : "inicio";
     let alvoPendente;
 
     function renderizar(focar = true) {
         const hash = window.location.hash.slice(1);
-        const rota = Object.hasOwn(titulos, hash) ? hash : inicial;
+        const rota = Object.hasOwn(titulos, hash) ? hash : "inicio";
         if (hash !== rota) history.replaceState(null, "", "#" + rota);
         app.innerHTML = obterTemplate(rota);
         app.dataset.route = rota;
@@ -32,6 +29,13 @@ export function iniciarRouter(app, aoRenderizar) {
 
     window.addEventListener("hashchange", () => renderizar());
     document.addEventListener("click", evento => {
+        const atalho = evento.target.closest(".skip-link");
+        if (atalho) {
+            evento.preventDefault();
+            app.focus();
+            app.scrollIntoView();
+            return;
+        }
         const link = evento.target.closest("a[data-project-target]");
         if (!link || evento.button !== 0 || evento.ctrlKey || evento.metaKey ||
             evento.shiftKey || evento.altKey || link.target === "_blank") return;
